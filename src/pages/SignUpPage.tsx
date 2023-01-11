@@ -12,6 +12,7 @@ import InputField from '../components/InputField';
 import DropdownSelect from '../components/DropdownSelect';
 import SubmitButton from '../components/SubmitButton';
 import { useState } from 'react';
+import { signup } from '../services/auth';
 
 // Styling
 const SignUpForm = styled.form`
@@ -28,7 +29,7 @@ const SignUpForm = styled.form`
 
 // Types
 
-type UserSubmitForm = {
+export type UserSubmitForm = {
   fullName: string;
   email: string;
   password: string;
@@ -63,14 +64,7 @@ const SignUpPage = () => {
 
     if (data) {
       try {
-        await axios({
-          method: 'POST',
-          url: 'https://auth-test-api-techinnover.herokuapp.com/api/v1/user/create',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data
-        });
+        signup(data);
 
         setIsLoading(false);
 

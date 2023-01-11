@@ -10,6 +10,8 @@ import { toast } from 'react-toastify';
 import InputField from '../components/InputField';
 import SubmitButton from '../components/SubmitButton';
 import { useState } from 'react';
+import { setCookie } from '../services/setCookie';
+import { login } from '../services/auth';
 
 // Styling
 const LoginForm = styled.form`
@@ -24,21 +26,8 @@ const LoginForm = styled.form`
   }
 `;
 
-// Save Cookie function
-function setCookie(name: string, value: any) {
-  // Convert the object to a JSON string
-  const jsonValue = JSON.stringify(value);
-
-  // Encode the string to be safe for use as a cookie value
-  const encodedValue = encodeURIComponent(jsonValue);
-
-  // Set the cookie
-  const expires = '';
-  document.cookie = `${name}=${encodedValue};${expires};path=/`;
-}
-
 // Types
-type UserSubmitForm = {
+export type LoginSubmitForm = {
   email: string;
   password: string;
 };
@@ -59,26 +48,20 @@ const LoginPage = () => {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<UserSubmitForm>({
+  } = useForm<LoginSubmitForm>({
     resolver: yupResolver(validationSchema)
   });
 
-  const onSubmit = async (data: UserSubmitForm) => {
+  const onSubmit = async (data: LoginSubmitForm) => {
     setIsLoading(true);
 
     if (data) {
       try {
-        const res = await axios({
-          method: 'POST',
-          url: 'https://auth-test-api-techinnover.herokuapp.com/api/v1/user/login',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data
-        });
+        const res = await login(data);
 
         setIsLoading(false);
-        setCookie('userId', res.data._id);
+
+        setCookie('userId', res?.data?._id);
 
         toast.success('Login successful!');
       } catch (error: any) {
