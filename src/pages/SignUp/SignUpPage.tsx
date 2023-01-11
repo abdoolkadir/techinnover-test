@@ -8,33 +8,14 @@ import * as Yup from 'yup';
 
 import { toast } from 'react-toastify';
 
-import InputField from '../components/InputField';
-import DropdownSelect from '../components/DropdownSelect';
-import SubmitButton from '../components/SubmitButton';
+import InputField from '../../components/InputField';
+import DropdownSelect from '../../components/DropdownSelect';
+import SubmitButton from '../../components/SubmitButton';
 import { useState } from 'react';
-import { signup } from '../services/auth';
+import { signup } from '../../services/auth';
 
-// Styling
-const SignUpForm = styled.form`
-  width: 50%;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  @media screen and (max-width: 768px) {
-    width: 80%;
-  }
-`;
-
-// Types
-
-export type UserSubmitForm = {
-  fullName: string;
-  email: string;
-  password: string;
-  userType: string;
-};
+import { SignUpForm } from './Signup.styles';
+import { UserSubmitForm } from '../../types/types';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Fullname is required'),

@@ -1,36 +1,17 @@
-import axios from 'axios';
-import styled from 'styled-components';
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { toast } from 'react-toastify';
 
-import InputField from '../components/InputField';
-import SubmitButton from '../components/SubmitButton';
+import InputField from '../../components/InputField';
+import SubmitButton from '../../components/SubmitButton';
 import { useState } from 'react';
-import { setCookie } from '../services/setCookie';
-import { login } from '../services/auth';
+import { setCookie } from '../../services/setCookie';
+import { login } from '../../services/auth';
 
-// Styling
-const LoginForm = styled.form`
-  width: 50%;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  @media screen and (max-width: 768px) {
-    width: 80%;
-  }
-`;
-
-// Types
-export type LoginSubmitForm = {
-  email: string;
-  password: string;
-};
+import { LoginForm } from './Login.styles';
+import { LoginSubmitForm } from '../../types/types';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required('Email is required').email('Email is invalid'),

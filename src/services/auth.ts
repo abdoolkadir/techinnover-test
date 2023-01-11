@@ -1,5 +1,4 @@
-import { LoginSubmitForm } from "../pages/Login";
-import { UserSubmitForm } from "../pages/SignUpPage";
+import { LoginSubmitForm, UserSubmitForm } from "../types/types";
 import axiosInstance from "./axios";
 import { authEndpoints } from "./endpoints";
 

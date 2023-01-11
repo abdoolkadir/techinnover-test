@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Container from './components/Container';
-import SignUpPage from './pages/SignUpPage';
-import Login from './pages/Login';
+import SignUpPage from './pages/SignUp/SignUpPage';
+import LoginPage from './pages/Login/LoginPage';
 import Home from './pages/Home';
 
 import { ToastContainer } from 'react-toastify';
@@ -29,7 +29,7 @@ function App() {
             <Route path="/" element={<Home />} />
 
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </Router>
       </Container>
