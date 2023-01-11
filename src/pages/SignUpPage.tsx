@@ -53,7 +53,6 @@ const SignUpPage = () => {
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors }
   } = useForm<UserSubmitForm>({
     resolver: yupResolver(validationSchema)

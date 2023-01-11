@@ -1,5 +1,4 @@
-import axios, { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 
 import { useForm } from 'react-hook-form';
@@ -54,13 +53,11 @@ const validationSchema = Yup.object().shape({
 
 // Render Function
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors }
   } = useForm<UserSubmitForm>({
     resolver: yupResolver(validationSchema)
