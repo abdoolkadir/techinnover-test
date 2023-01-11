@@ -1,6 +1,4 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
