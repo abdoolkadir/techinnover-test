@@ -39,7 +39,6 @@ function setCookie(name: string, value: any) {
 }
 
 // Types
-
 type UserSubmitForm = {
   email: string;
   password: string;
@@ -53,6 +52,7 @@ const validationSchema = Yup.object().shape({
     .max(40, 'Password must not exceed 40 characters')
 });
 
+// Render Function
 const LoginPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -45,6 +45,7 @@ const validationSchema = Yup.object().shape({
   userType: Yup.string().required('Please select a user type')
 });
 
+// Render Function
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
