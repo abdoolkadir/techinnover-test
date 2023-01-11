@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -63,7 +63,7 @@ const SignUpPage = () => {
 
     if (data) {
       try {
-        const res = await axios({
+        await axios({
           method: 'POST',
           url: 'https://auth-test-api-techinnover.herokuapp.com/api/v1/user/create',
           headers: {
