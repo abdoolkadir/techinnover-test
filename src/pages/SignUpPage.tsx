@@ -9,11 +9,12 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 import InputField from '../components/InputField';
+import DropdownSelect from '../components/DropdownSelect';
 import SubmitButton from '../components/SubmitButton';
 import { useState } from 'react';
 
 // Styling
-const LoginForm = styled.form`
+const SignUpForm = styled.form`
   width: 50%;
   padding: 1rem;
   display: flex;
@@ -25,35 +26,26 @@ const LoginForm = styled.form`
   }
 `;
 
-// Save Cookie function
-function setCookie(name: string, value: any) {
-  // Convert the object to a JSON string
-  const jsonValue = JSON.stringify(value);
-
-  // Encode the string to be safe for use as a cookie value
-  const encodedValue = encodeURIComponent(jsonValue);
-
-  // Set the cookie
-  const expires = '';
-  document.cookie = `${name}=${encodedValue};${expires};path=/`;
-}
-
 // Types
 
 type UserSubmitForm = {
+  fullName: string;
   email: string;
   password: string;
+  userType: string;
 };
 
 const validationSchema = Yup.object().shape({
+  fullName: Yup.string().required('Fullname is required'),
   email: Yup.string().required('Email is required').email('Email is invalid'),
   password: Yup.string()
     .required('Password is required')
     .min(6, 'Password must be at least 6 characters')
-    .max(40, 'Password must not exceed 40 characters')
+    .max(40, 'Password must not exceed 40 characters'),
+  userType: Yup.string().required('Please select a user type')
 });
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -73,7 +65,7 @@ const LoginPage = () => {
       try {
         const res = await axios({
           method: 'POST',
-          url: 'https://auth-test-api-techinnover.herokuapp.com/api/v1/user/login',
+          url: 'https://auth-test-api-techinnover.herokuapp.com/api/v1/user/create',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -81,23 +73,28 @@ const LoginPage = () => {
         });
 
         setIsLoading(false);
-        setCookie('userId', res.data._id);
 
-        toast.success('Login successful!');
+        toast.success('Sign up successful!');
+
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+
+        // console.log(res);
       } catch (error: any) {
         setIsLoading(false);
         if (error.response) {
-          toast.error(`Login Failed: ${error.response?.data.message}`);
+          toast.error(`Sign Up Failed: ${error.response?.data.message}`);
         } else {
-          toast.error(`Login Failed: ${error.message}`);
+          toast.error(`Sign Up Failed: ${error.message}`);
         }
       }
     }
   };
 
   return (
-    <LoginForm onSubmit={handleSubmit(onSubmit)}>
-      <h1>Login</h1>
+    <SignUpForm onSubmit={handleSubmit(onSubmit)}>
+      <h1>Signup</h1>
       <InputField
         label="Email address"
         type="email"
@@ -112,9 +109,19 @@ const LoginPage = () => {
         register={{ ...register('password') }}
         error={errors.password?.message}
       />
-
-      <SubmitButton title={isLoading ? 'loading...' : 'Login'} />
-    </LoginForm>
+      <InputField
+        label="Fullname"
+        type="text"
+        placeholder="Enter your fullname"
+        register={{ ...register('fullName') }}
+        error={errors.fullName?.message}
+      />
+      <DropdownSelect
+        label="What is your role"
+        register={{ ...register('userType') }}
+      />
+      <SubmitButton title={isLoading ? 'loading...' : 'Sign In'} />
+    </SignUpForm>
   );
 };
-export default LoginPage;
+export default SignUpPage;
